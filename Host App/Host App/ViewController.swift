@@ -10,5 +10,21 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var textView: UITextView!
+
+    override func viewDidLoad() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(didReceive(notification:)),
+                                               name: logNotificationName,
+                                               object: nil)
+    }
+
+    @objc
+    func didReceive(notification: NSNotification) {
+        guard let message = notification.userInfo?["message"]
+            else { return }
+
+        textView.text.append("\n-- \(message)")
+    }
 }
 
